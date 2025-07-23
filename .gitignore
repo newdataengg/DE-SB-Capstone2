@@ -1,5 +1,4 @@
 # Logs
-logs/
 *.log
 
 # Runtime data
@@ -183,6 +182,79 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+# =============================================================================
+# SECRETS AND SENSITIVE FILES
+# =============================================================================
+
+# Environment files with secrets
+.env*
+*.env
+.env.local
+.env.production
+.env.staging
+.env.development
+
+# Configuration files with secrets
+config.ini
+config.json
+secrets.json
+credentials.json
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Azure/AWS credentials
+azure-credentials.json
+aws-credentials.json
+*.publishsettings
+
+# Database connection strings
+connection_strings.txt
+db_credentials.txt
+
+# API keys and tokens
+api_keys.txt
+tokens.txt
+access_tokens.txt
+
+# Log files that might contain secrets
+logs/*.log
+logs/**/*.log
+*.log
+
+# Snowflake credentials
+snowflake_credentials.json
+snowflake_config.json
+
+# Event Hub connection strings
+event_hub_*.txt
+event_hub_*.json
+
+# Storage account keys
+storage_*.txt
+storage_*.json
+
+# Databricks tokens
+databricks_token.txt
+databricks_credentials.json
+
+# =============================================================================
+# PROJECT-SPECIFIC SECRETS
+# =============================================================================
+
+# Azure resource creation logs (may contain secrets)
+create_az_resources.log
+azure_setup.log
+
+# Connection test outputs
+connection_test.log
+test_connection.log
+
+# Temporary credential files
+temp_credentials.txt
+temp_config.json
 
 # Spyder project settings
 .spyderproject
