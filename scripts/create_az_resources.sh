@@ -108,41 +108,41 @@ echo "⚠️  IMPORTANT: Replace placeholder values with your actual secrets!"
 az keyvault secret set \
   --vault-name $KEY_VAULT_NAME \
   --name "event-hub-connection-string" \
-  --value "Endpoint=sb://<YOUR_EVENT_HUB_NAMESPACE>.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=<YOUR_ACTUAL_SHARED_ACCESS_KEY>"
+  --value "REPLACE_WITH_YOUR_ACTUAL_EVENT_HUB_CONNECTION_STRING"
 
 # Add Storage connection string (REPLACE WITH YOUR ACTUAL CONNECTION STRING)
 az keyvault secret set \
   --vault-name $KEY_VAULT_NAME \
   --name "storage-connection-string" \
-  --value "DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=<YOUR_STORAGE_ACCOUNT>;AccountKey=<YOUR_ACTUAL_STORAGE_KEY>;BlobEndpoint=https://<YOUR_STORAGE_ACCOUNT>.blob.core.windows.net/;FileEndpoint=https://<YOUR_STORAGE_ACCOUNT>.file.core.windows.net/;QueueEndpoint=https://<YOUR_STORAGE_ACCOUNT>.queue.core.windows.net/;TableEndpoint=https://<YOUR_STORAGE_ACCOUNT>.table.core.windows.net/"
+  --value "REPLACE_WITH_YOUR_ACTUAL_STORAGE_CONNECTION_STRING"
 
 # Add Polygon API key (REPLACE WITH YOUR ACTUAL API KEY)
 az keyvault secret set \
   --vault-name $KEY_VAULT_NAME \
   --name "polygon-api-key" \
-  --value "<YOUR_ACTUAL_POLYGON_API_KEY>"
+  --value "REPLACE_WITH_YOUR_ACTUAL_POLYGON_API_KEY"
 
 # Add NewsAPI key (REPLACE WITH YOUR ACTUAL API KEY)
 az keyvault secret set \
   --vault-name $KEY_VAULT_NAME \
   --name "newsapi-key" \
-  --value "<YOUR_ACTUAL_NEWSAPI_KEY>"
+  --value "REPLACE_WITH_YOUR_ACTUAL_NEWSAPI_KEY"
 
 # Add Snowflake credentials (REPLACE WITH YOUR ACTUAL CREDENTIALS)
 az keyvault secret set \
   --vault-name $KEY_VAULT_NAME \
   --name "sf-user" \
-  --value "<YOUR_ACTUAL_SNOWFLAKE_USERNAME>"
+  --value "REPLACE_WITH_YOUR_ACTUAL_SNOWFLAKE_USERNAME"
 
 az keyvault secret set \
   --vault-name $KEY_VAULT_NAME \
   --name "sf-password" \
-  --value "<YOUR_ACTUAL_SNOWFLAKE_PASSWORD>"
+  --value "REPLACE_WITH_YOUR_ACTUAL_SNOWFLAKE_PASSWORD"
 
 az keyvault secret set \
   --vault-name $KEY_VAULT_NAME \
   --name "sf-database" \
-  --value "<YOUR_ACTUAL_SNOWFLAKE_DATABASE>"
+  --value "REPLACE_WITH_YOUR_ACTUAL_SNOWFLAKE_DATABASE"
 
 # =============================================================================
 # SETUP DATABRICKS ACCESS TO KEY VAULT
