@@ -1,0 +1,137 @@
+🚀 ULTIMATE SCHEMA PIPELINE - Delta Lake Compatible
+================================================================================
+⏰ Started: 2025-07-21 22:26:23
+🚀 Schema Pipeline - Databricks Delta Lake Compatible
+📊 Stock-News Sentiment Correlation Analysis with BI Export
+🎯 COMPLETE SOLUTION for all schema conflicts
+🚀 STARTING SCHEMA PIPELINE
+🎯 Resolving column resolution errors and schema conflicts
+🔧 Dynamic column detection and safe fallbacks
+📋 Batch ID: schema_20250721_222623
+
+🚀 Initializing Schema Pipeline...
+📁 Working with catalog: databricks_stock_sentiment_canada
+✅ Gold schema created/verified
+
+🔑 Setting up Snowflake connection...
+✅ Snowflake connection configured
+
+🔥 Creating tables with schema enforcement...
+🗑️ Dropped stock_analytics
+🗑️ Dropped news_sentiment
+🗑️ Dropped stock_news_correlation
+🗑️ Dropped daily_market_summary
+🗑️ Dropped trading_signals
+✅ Created stock_analytics with schema
+✅ Created news_sentiment with schema
+✅ Created stock_news_correlation
+✅ Created daily_market_summary
+✅ Created trading_signals
+🎉 ALL TABLES CREATED WITH SCHEMA CONSISTENCY!
+
+🔍 Discovering Silver Layer Data Sources...
+✅ enhanced_stock_data: 6 records
+   📋 Columns: 51 total - ['symbol', 'date', 'timestamp', 'open_price', 'high_price']...
+✅ stock_data_consumer: 6 records
+   📋 Columns: 21 total - ['symbol', 'timestamp', 'open_price', 'high_price', 'low_price']...
+✅ enhanced_news_data: 30 records
+   📋 Columns: 43 total - ['article_id', 'title', 'description', 'content', 'url']...
+✅ news_data_consumer: 8 records
+   📋 Columns: 25 total - ['title', 'content', 'source', 'published_at', 'url']...
+
+📊 Discovered 4 data sources
+
+📈 Processing Stock Analytics...
+
+📊 Processing enhanced_stock_data...
+✅ Processed 6 stock records from enhanced_stock_data
+
+📊 Processing stock_data_consumer...
+✅ Processed 6 stock records from stock_data_consumer
+
+📰 Processing News Sentiment (SCHEMA)...
+
+📊 Processing enhanced_news_data...
+✅ Processed 30 news records from enhanced_news_data
+
+📊 Processing news_data_consumer...
+✅ Processed 8 news records from news_data_consumer
+
+🔗 Creating Simple Data...
+✅ Created 6 correlations
+✅ Created market summary
+✅ Created 6 trading signals
+
+❄️ Exporting to Snowflake for BI...
+
+📤 Exporting stock_analytics to GOLD_STOCK_ANALYTICS...
+📊 Found 12 records to export
+💾 Writing to Snowflake table: GOLD_STOCK_ANALYTICS
+✅ Successfully exported 12 records to GOLD_STOCK_ANALYTICS
+
+📤 Exporting news_sentiment to GOLD_NEWS_SENTIMENT...
+📊 Found 38 records to export
+💾 Writing to Snowflake table: GOLD_NEWS_SENTIMENT
+✅ Successfully exported 38 records to GOLD_NEWS_SENTIMENT
+
+📤 Exporting stock_news_correlation to GOLD_CORRELATIONS...
+📊 Found 6 records to export
+💾 Writing to Snowflake table: GOLD_CORRELATIONS
+✅ Successfully exported 6 records to GOLD_CORRELATIONS
+
+📤 Exporting daily_market_summary to GOLD_MARKET_SUMMARY...
+📊 Found 1 records to export
+💾 Writing to Snowflake table: GOLD_MARKET_SUMMARY
+✅ Successfully exported 1 records to GOLD_MARKET_SUMMARY
+
+📤 Exporting trading_signals to GOLD_TRADING_SIGNALS...
+📊 Found 6 records to export
+💾 Writing to Snowflake table: GOLD_TRADING_SIGNALS
+✅ Successfully exported 6 records to GOLD_TRADING_SIGNALS
+
+🎉 Snowflake export successful!
+📊 Exported 5 tables with 63 total records
+
+================================================================================
+🚀 SCHEMA PIPELINE SUMMARY
+================================================================================
+
+⏱️ Processing Timeline:
+   Start: 2025-07-21 22:26:23
+   End: 2025-07-21 22:27:07
+   Duration: 0.73 minutes
+
+📊 Processing Results:
+   ✅ Tables Created: 5
+   📈 Records Processed: 50
+   🔗 Correlations Calculated: 6
+   ❄️ Snowflake Tables Exported: 5
+   📊 Total Snowflake Records: 63
+
+🔧 FIXES APPLIED (4):
+   1. Created tables with proper schema enforcement
+   2. Stock processing with dynamic column detection
+   3. News processing with dynamic column detection
+   4. Created all data with consistent schemas
+
+🚀 Pipeline Status:
+   ✅ COMPLETE SUCCESS
+   🔧 Dynamic column detection working
+   📊 Production-ready Gold layer operational
+   ❄️ Snowflake BI integration successful
+================================================================================
+
+🎉 SCHEMA PIPELINE SUCCESSFUL!
+🚀 Production-ready data pipeline fully operational!
+🔧 ALL SCHEMA ISSUES COMPLETELY RESOLVED!
+📊 Dynamic column detection working perfectly!
+❄️ Snowflake BI integration complete!
+
+✅ COMPLETE SUCCESS!
+🎓 Capstone project Gold layer!
+🚀 Ready for advanced analytics and BI dashboards!
+📊 Your production data pipeline is fully operational!
+🔧 ALL SCHEMA CONFLICTS COMPLETELY RESOLVED!
+
+⏰ Pipeline completed: 2025-07-21 22:27:07
+🚀 Schema Pipeline - End of Execution

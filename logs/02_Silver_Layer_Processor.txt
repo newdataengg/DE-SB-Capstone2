@@ -1,0 +1,154 @@
+🥈 Silver Layer Processor - Complete Combined Version
+============================================================
+⏰ Started: 2025-07-21 22:23:12
+🎯 Focus: Bronze → Silver with explicit schemas and comprehensive analytics
+📋 Current catalog: databricks_stock_sentiment_canada
+✅ Configuration loaded successfully
+📊 Bronze Stock Table: databricks_stock_sentiment_canada.bronze.historical_stock_data
+📰 Bronze News Table: databricks_stock_sentiment_canada.bronze.historical_news_data
+📊 Enhanced processing configuration:
+   batch_size: 1000
+   finbert_confidence_threshold: 0.6
+   data_quality_threshold: 0.7
+   technical_indicators_window: 20
+   sentiment_aggregation_window: 7
+   correlation_analysis_enabled: True
+   feature_engineering_enabled: True
+   max_news_records_per_batch: 50
+   enable_explicit_schema: True
+✅ Explicit schemas defined for type-safe DataFrame creation
+📊 Stock schema: 51 fields
+📰 News schema: 43 fields
+🤖 Loading enhanced FinBERT model...
+
+✅ FinBERT model ready for production
+🤖 FinBERT Status: Production Ready
+🏗️ Creating enhanced Silver layer tables...
+✅ Silver schema created in catalog: databricks_stock_sentiment_canada
+✅ Created enhanced stock table: databricks_stock_sentiment_canada.silver.enhanced_stock_data
+✅ Created enhanced news table: databricks_stock_sentiment_canada.silver.enhanced_news_data
+✅ Enhanced Silver layer tables created successfully
+🚀 Launching Silver Layer Processing
+🎯 Key Features:
+   • Explicit schemas for type safety
+   • Production FinBERT sentiment analysis
+   • Comprehensive technical indicators
+   • Enhanced error handling and stability
+🧹 Cleaning up existing Silver tables for fresh schema...
+✅ Dropped existing table: databricks_stock_sentiment_canada.silver.enhanced_stock_data
+✅ Dropped existing table: databricks_stock_sentiment_canada.silver.enhanced_news_data
+✅ Silver tables cleanup completed
+
+🥈 Starting Combined Silver Layer Processing
+📋 Batch ID: silver_combined_20250721_222342
+⏰ Started: 2025-07-21 22:23:42
+🎯 Features: Explicit schemas + FinBERT + Technical indicators
+
+📊 Phase 1: Enhanced Stock Processing
+📈 Processing 6 stock records
+📊 Calculating comprehensive technical indicators...
+✅ Comprehensive technical indicators calculated with all required fields
+✅ Created 6 enhanced stock records
+
+🤖 Phase 2: Enhanced News Processing with FinBERT
+📰 Found 30 news records
+🔄 Processing 30 high-quality news records with FinBERT...
+🔄 Processed 10/30 (33.3%)
+🔄 Processed 20/30 (66.7%)
+🔄 Processed 30/30 (100.0%)
+💾 Creating DataFrame with explicit schema for 30 records...
+✅ Created 30 enhanced news records
+
+⚡ Phase 3: Table Optimization
+✅ Optimized databricks_stock_sentiment_canada.silver.enhanced_stock_data (6 records)
+✅ Optimized databricks_stock_sentiment_canada.silver.enhanced_news_data (30 records)
+
+================================================================================
+🥈 SILVER LAYER PROCESSING SUMMARY
+================================================================================
+📋 Processing Details:
+   Batch ID: silver_combined_20250721_222342
+   Duration: 0.30 minutes
+   Start: 22:23:42
+   End: 22:24:00
+
+📊 Processing Results:
+   📈 Stock Records: 6 → 6
+   📰 News Records: 30 → 30
+   🎯 Total Enhanced: 36 records
+
+🤖 FinBERT Processing:
+   Model Status: Production
+   Total Calls: 30
+   Avg Time: 150.55ms
+
+🎯 Enhanced Features Created:
+   ✅ Technical indicators (RSI, MACD, Bollinger Bands)
+   ✅ FinBERT sentiment analysis with confidence
+   ✅ Type-safe DataFrame creation with explicit schemas
+   ✅ Quality scoring and reliability metrics
+   ✅ Optimized for correlation analysis
+
+✅ STATUS: SUCCESS - Ready for Gold layer correlation analysis!
+================================================================================
+
+🎉 Combined Silver Layer Processing Complete!
+
+📊 Final Silver Layer Status:
+   📈 Enhanced Stock Records: 6
+   📰 Enhanced News Records: 30
+
+🔗 Correlation Analysis Ready:
+   ✅ Stock technical indicators available
+   ✅ News sentiment analysis complete
+   ✅ Both datasets in Silver layer
+   🚀 Ready for Gold layer processing!
+
+📊 Stock Data Preview:
++------+----------+-----------+-------+----------------+
+|symbol|      date|close_price|rsi_14d|technical_signal|
++------+----------+-----------+-------+----------------+
+|  AAPL|2025-07-18|     211.18|   50.0|            hold|
+|  AMZN|2025-07-18|     226.13|   50.0|            hold|
+| GOOGL|2025-07-18|     185.06|   50.0|            hold|
++------+----------+-----------+-------+----------------+
+
+
+📰 News Data Preview:
++------------------------------------------------------------------------------------------+-------------+-------------+------------------+
+|title                                                                                     |finbert_label|finbert_score|finbert_confidence|
++------------------------------------------------------------------------------------------+-------------+-------------+------------------+
+|Mamadou Sarr set to rejoin RC Strasbourg on loan from Chelsea — report                    |positive     |0.8917       |0.8917            |
+|Sad Double Heartbreak for 'Love Actually' Star Martine McCutcheon After Split From Husband|neutral      |0.3008       |0.596             |
+|The Westpac share price is a buy – UBS                                                    |positive     |0.8142       |0.8142            |
++------------------------------------------------------------------------------------------+-------------+-------------+------------------+
+
+
+🔍 Final Silver Layer Verification
+============================================================
+
+📊 Stock Data Verification:
+   📈 Records: 6
+   📊 Technical Indicators Quality: 100.00%
+   ✅ Stock data ready for correlation analysis
+
+📰 News Data Verification:
+   📰 Records: 30
+   🤖 High Confidence Predictions: 83.33%
+   📊 Average FinBERT Confidence: 0.776
+   🎯 Sentiment Variety: 3 labels
+   ✅ News data ready for correlation analysis
+
+🔗 Correlation Analysis Readiness:
+   ✅ Both datasets are ready for correlation analysis
+   ✅ Technical indicators calculated and validated
+   ✅ FinBERT sentiment analysis completed
+   ✅ Data quality thresholds met
+
+📊 Overall Silver Layer Quality Score: 90.0%
+
+🎊 SILVER LAYER PROCESSOR COMPLETED
+================================================================================
+🎯 STATUS: READY FOR ADVANCED ANALYTICS
+
+⏰ Processing completed: 2025-07-21 22:24:03

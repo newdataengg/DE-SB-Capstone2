@@ -1,0 +1,156 @@
+📰 Event Hub News Consumer with FinBERT
+============================================================
+🏗️ Setting up database schemas with ALL STRING types...
+🔍 Checking existing schemas...
+📁 Current catalog: databricks_stock_sentiment_canada
+📁 Current database: default
+📋 Schema columns available: ['databaseName']
+📋 Existing schemas: ['bronze', 'default', 'information_schema', 'silver']
+✅ Silver schema already exists
+✅ Bronze schema already exists
+🗑️ Dropped any existing consumer table
+✅ Table databricks_stock_sentiment_canada.silver.news_data_consumer created with ALL STRING types
+📋 Available tables in silver schema: ['news_data_consumer', 'stock_data_consumer']
+
+============================================================
+📰 Running News Consumer with FinBERT
+============================================================
+✅ Configuration loaded
+🤖 Loading FinBERT model...
+✅ FinBERT model ready
+🚀 Starting News FinBERT Consumer Script
+⏰ 2025-07-21 22:13:46
+
+🔄 Starting news data consumption and FinBERT processing...
+📰 1: NEWS - Stock market today: Live updat...
+📰 2: NEWS - Is It Time To Consider Buying ...
+📰 3: NEWS - Your Photography Skills Are Al...
+📰 4: NEWS - ASX Penny Stocks With Market C...
+📰 5: NEWS - Is spinal cord stimulation saf...
+📰 6: NEWS - ⚡ Nepal’s EV Revolution Surges...
+📰 7: NEWS - High Growth Tech Stocks in Aus...
+📰 8: NEWS - Stocks only go up…until they d...
+✅ Consumed 8 news messages
+
+🔍 DEBUG - Message 1 structure:
+   Keys: ['title', 'content', 'source', 'published_at', 'url', 'sentiment_score', 'data_type', 'title_length', 'content_length', 'api_fetch_time', 'sentiment_category', 'event_timestamp', 'event_source', 'partition_key', 'processing_mode', 'consumer_timestamp', 'partition_id']
+   data_type: news_sentiment
+   title: Stock market today: Live updates...
+   title: Stock market today: Live updates... (type: str)
+   content: U.S. stock futures were little changed Sunday nigh... (type: str)
+   source: CNBC (type: str)
+   published_at: 2025-07-20T22:06:06Z (type: str)
+   url: https://www.cnbc.com/2025/07/20/stock-market-today-live-updates.html (type: str)
+   sentiment_score: 0.1 (type: str)
+   data_type: news_sentiment (type: str)
+   title_length: 32 (type: str)
+   content_length: 214 (type: str)
+   api_fetch_time: 2025-07-21T22:10:51.894156+00:00 (type: str)
+   sentiment_category: neutral (type: str)
+   event_timestamp: 2025-07-21T22:10:52.899417+00:00 (type: str)
+   event_source: api_producer (type: str)
+   partition_key: general (type: str)
+   processing_mode: streaming (type: str)
+   consumer_timestamp: 2025-07-21T22:13:52.309783+00:00 (type: str)
+   partition_id: 0 (type: str)
+
+🤖 Processing 8 news events with FinBERT:
+
+🔍 Processing news 1/8
+   Title: Stock market today: Live updates...
+✅ 1/8: Stock market today: Live updat... → positive (0.6853) [finbert]
+
+🔍 Processing news 2/8
+   Title: Is It Time To Consider Buying Retail Food Group Li...
+✅ 2/8: Is It Time To Consider Buying ... → negative (-0.9418) [finbert]
+
+🔍 Processing news 3/8
+   Title: Your Photography Skills Are Already Obsolete (You ...
+✅ 3/8: Your Photography Skills Are Al... → positive (0.5029) [finbert]
+
+🔍 Processing news 4/8
+   Title: ASX Penny Stocks With Market Caps Over A$600M...
+✅ 4/8: ASX Penny Stocks With Market C... → negative (-0.9248) [finbert]
+
+🔍 Processing news 5/8
+   Title: Is spinal cord stimulation safe? Does it work? Her...
+✅ 5/8: Is spinal cord stimulation saf... → positive (0.9438) [finbert]
+
+🔍 Processing news 6/8
+   Title: ⚡ Nepal’s EV Revolution Surges Ahead as Economy Sh...
+✅ 6/8: ⚡ Nepal’s EV Revolution Surges... → negative (-0.8178) [finbert]
+
+🔍 Processing news 7/8
+   Title: High Growth Tech Stocks in Australia Featuring Lif...
+✅ 7/8: High Growth Tech Stocks in Aus... → negative (-0.9396) [finbert]
+
+🔍 Processing news 8/8
+   Title: Stocks only go up…until they don’t: A history less...
+✅ 8/8: Stocks only go up…until they d... → positive (0.7046) [finbert]
+
+💾 Saving 8 FinBERT processed news articles...
+📋 News DataFrame schema:
+root
+ |-- consumer_timestamp: string (nullable = true)
+ |-- content: string (nullable = true)
+ |-- finbert_confidence: string (nullable = true)
+ |-- finbert_label: string (nullable = true)
+ |-- finbert_negative: string (nullable = true)
+ |-- finbert_neutral: string (nullable = true)
+ |-- finbert_positive: string (nullable = true)
+ |-- finbert_score: string (nullable = true)
+ |-- ingestion_batch: string (nullable = true)
+ |-- ingestion_source: string (nullable = true)
+ |-- ingestion_time: string (nullable = true)
+ |-- layer: string (nullable = true)
+ |-- original_sentiment_category: string (nullable = true)
+ |-- original_sentiment_score: string (nullable = true)
+ |-- partition_id: string (nullable = true)
+ |-- processed_date: string (nullable = true)
+ |-- processing_method: string (nullable = true)
+ |-- processing_mode: string (nullable = true)
+ |-- processing_time_seconds: string (nullable = true)
+ |-- published_at: string (nullable = true)
+ |-- silver_processing_time: string (nullable = true)
+ |-- source: string (nullable = true)
+ |-- text_length: string (nullable = true)
+ |-- title: string (nullable = true)
+ |-- url: string (nullable = true)
+
+✅ Saved FinBERT news to Silver layer (ADLS)
+✅ Also saved news to Unity Catalog
+
+🔍 Verification:
+✅ Silver layer news files: 2
+✅ Verified: 8 new FinBERT records (8 total)
+
+📊 Sample FinBERT Results:
++--------------------------------------------------------------------------------------------------------------+-------------+-------------+------------------+-----------------+
+|title                                                                                                         |finbert_label|finbert_score|finbert_confidence|processing_method|
++--------------------------------------------------------------------------------------------------------------+-------------+-------------+------------------+-----------------+
+|Stocks only go up…until they don’t: A history lesson and a forecast                                           |positive     |0.7046       |0.7046            |finbert          |
+|High Growth Tech Stocks in Australia Featuring Life360 and Two Others                                         |negative     |-0.9396      |0.9396            |finbert          |
+|⚡ Nepal’s EV Revolution Surges Ahead as Economy Shows Signs of Recovery – NRNA Elections Spark Diaspora Energy|negative     |-0.8178      |0.8178            |finbert          |
+|Is spinal cord stimulation safe? Does it work? Here’s what you need to know if you have back pain             |positive     |0.9438       |0.9438            |finbert          |
+|ASX Penny Stocks With Market Caps Over A$600M                                                                 |negative     |-0.9248      |0.9248            |finbert          |
++--------------------------------------------------------------------------------------------------------------+-------------+-------------+------------------+-----------------+
+
+
+📈 Sentiment Distribution:
++-------------+-----+
+|finbert_label|count|
++-------------+-----+
+|     negative|    4|
+|     positive|    4|
++-------------+-----+
+
+
+📋 Final Summary:
+✅ Consumed: 8 news messages
+✅ Processed: 8 news articles with FinBERT
+✅ FinBERT model: Real model
+✅ ADLS save: True
+📁 Batch ID: news_consumer_20250721_221415
+📋 New Table: databricks_stock_sentiment_canada.silver.news_data_consumer
+
+⏰ COMPLETED: 22:14:22

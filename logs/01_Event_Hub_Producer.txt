@@ -1,0 +1,105 @@
+Collecting newsapi-python
+  Downloading newsapi_python-0.2.7-py2.py3-none-any.whl.metadata (1.2 kB)
+Requirement already satisfied: requests in /databricks/python3/lib/python3.12/site-packages (2.32.2)
+Requirement already satisfied: azure-eventhub in /local_disk0/.ephemeral_nfs/cluster_libraries/python/lib/python3.12/site-packages (5.11.4)
+Requirement already satisfied: websocket-client in /local_disk0/.ephemeral_nfs/cluster_libraries/python/lib/python3.12/site-packages (1.8.0)
+Requirement already satisfied: charset-normalizer<4,>=2 in /databricks/python3/lib/python3.12/site-packages (from requests) (2.0.4)
+Requirement already satisfied: idna<4,>=2.5 in /databricks/python3/lib/python3.12/site-packages (from requests) (3.7)
+Requirement already satisfied: urllib3<3,>=1.21.1 in /databricks/python3/lib/python3.12/site-packages (from requests) (1.26.16)
+Requirement already satisfied: certifi>=2017.4.17 in /databricks/python3/lib/python3.12/site-packages (from requests) (2024.6.2)
+Requirement already satisfied: azure-core<2.0.0,>=1.14.0 in /databricks/python3/lib/python3.12/site-packages (from azure-eventhub) (1.31.0)
+Requirement already satisfied: typing-extensions>=4.0.1 in /databricks/python3/lib/python3.12/site-packages (from azure-eventhub) (4.11.0)
+Requirement already satisfied: six>=1.11.0 in /usr/lib/python3/dist-packages (from azure-core<2.0.0,>=1.14.0->azure-eventhub) (1.16.0)
+Downloading newsapi_python-0.2.7-py2.py3-none-any.whl (7.9 kB)
+Installing collected packages: newsapi-python
+Successfully installed newsapi-python-0.2.7
+Note: you may need to restart the kernel using %restart_python or dbutils.library.restartPython() to use updated packages.
+🔧 Applying SSL compatibility fix...
+⚠️ SSL fix warning: module 'ssl' has no attribute 'wrap_socket'
+✅ Libraries imported successfully
+🔍 Connection string format: Endpoint=sb://eh-stock-sentiment-2025.servicebus.w...
+✅ Added EntityPath: stock-data-hub
+✅ All credentials retrieved from Key Vault
+✅ Event Hub connection string configured with EntityPath: stock-data-hub
+✅ Configuration complete
+🏗️ Setting up database schema with ALL consistent data types...
+📁 Current catalog: databricks_stock_sentiment_canada
+✅ Schema databricks_stock_sentiment_canada.bronze created/verified
+🗑️ Dropped any existing tables
+✅ Table databricks_stock_sentiment_canada.bronze.stock_data created with ALL STRING types
+✅ Table databricks_stock_sentiment_canada.bronze.news_data created with ALL STRING types
+📋 Available tables in bronze schema: ['news_data', 'stock_data']
+🚀 Starting Data Pipeline...
+📊 Phase 1: API Data Collection
+📈 Fetching stock data for: AAPL, GOOGL, MSFT, AMZN, META, TSLA
+🔄 Fetching stock data for 6 symbols...
+✅ Retrieved AAPL: $211.18 (Volume: 48,974,591.0)
+⏳ Waiting 12 seconds for rate limiting...
+✅ Retrieved GOOGL: $185.06 (Volume: 34,014,509.0)
+⏳ Waiting 12 seconds for rate limiting...
+✅ Retrieved MSFT: $510.05 (Volume: 21,209,666.0)
+⏳ Waiting 12 seconds for rate limiting...
+✅ Retrieved AMZN: $226.13 (Volume: 37,833,807.0)
+⏳ Waiting 12 seconds for rate limiting...
+✅ Retrieved META: $704.28 (Volume: 12,779,752.0)
+⏳ Waiting 12 seconds for rate limiting...
+✅ Retrieved TSLA: $329.65 (Volume: 94,254,993.0)
+📰 Fetching financial news...
+🔄 Fetching news articles for query: 'stock market financial'
+✅ Retrieved 8 news articles
+
+📊 Data Collection Summary:
+   Stock records: 6
+   News records: 8
+
+📡 Phase 2: Streaming to Event Hubs
+🔌 Trying WebSocket connection...
+✅ Connected to Event Hub using WebSocket
+📈 Streaming 6 stock records...
+✅ Sent 6 stock_price events to Event Hub
+📰 Streaming 8 news records...
+✅ Sent 8 news_sentiment events to Event Hub
+✅ Event Hub connection closed
+✅ Successfully streamed all data to Event Hubs
+
+💾 Phase 3: Backup to Bronze Layer
+✅ Saved 6 stock records to Unity Catalog
+✅ Also backed up stock data to ADLS2
+✅ Saved 8 news records to Unity Catalog
+✅ Also backed up news data to ADLS2
+
+🎉 Pipeline Complete!
+✅ Processed: 6 stocks, 8 news articles
+📡 Data streamed to Event Hubs for real-time processing
+💾 Data backed up to Bronze layer for reliability
+
+🔍 Bronze Layer Verification:
+   Total stock records: 6
+   Total news records: 8
+
+📊 Recent Stock Data:
++------+-----------+----------+--------------------+----------------+
+|symbol|close_price|    volume|      ingestion_time|ingestion_source|
++------+-----------+----------+--------------------+----------------+
+|  MSFT|     510.05|21209666.0|2025-07-21T22:10:...|        producer|
+| GOOGL|     185.06|34014509.0|2025-07-21T22:10:...|        producer|
+|  AMZN|     226.13|37833807.0|2025-07-21T22:10:...|        producer|
+|  AAPL|     211.18|48974591.0|2025-07-21T22:10:...|        producer|
+|  META|     704.28|12779752.0|2025-07-21T22:10:...|        producer|
++------+-----------+----------+--------------------+----------------+
+
+
+📰 Recent News Data:
++-------------------------------------------------------------------------+---------------+--------------------------------+------------------+----------------+
+|title                                                                    |sentiment_score|ingestion_time                  |sentiment_category|ingestion_source|
++-------------------------------------------------------------------------+---------------+--------------------------------+------------------+----------------+
+|Stock market today: Live updates                                         |0.1            |2025-07-21T22:10:53.101403+00:00|neutral           |producer        |
+|Is It Time To Consider Buying Retail Food Group Limited (ASX:RFG)?       |0.2            |2025-07-21T22:10:53.101403+00:00|positive          |producer        |
+|Your Photography Skills Are Already Obsolete (You Just Don't Know It Yet)|0.0            |2025-07-21T22:10:53.101403+00:00|neutral           |producer        |
++-------------------------------------------------------------------------+---------------+--------------------------------+------------------+----------------+
+
+🔄 Event Hub Producer Complete!
+📋 Stock Table: databricks_stock_sentiment_canada.bronze.stock_data
+📋 News Table: databricks_stock_sentiment_canada.bronze.news_data
+
+⏰ Execution completed: 2025-07-21 22:11:01

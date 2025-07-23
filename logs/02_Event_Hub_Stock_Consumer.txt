@@ -1,0 +1,171 @@
+Stock Data Consumer Script
+======================================================================
+🏗️ Setting up database schemas with ALL STRING types...
+🔍 Checking existing schemas...
+📁 Current catalog: databricks_stock_sentiment_canada
+📁 Current database: default
+📋 Schema columns available: ['databaseName']
+📋 Existing schemas: ['bronze', 'default', 'information_schema']
+🔧 Creating silver schema...
+✅ Silver schema created
+✅ Bronze schema already exists
+🗑️ Dropped any existing consumer table
+✅ Table databricks_stock_sentiment_canada.silver.stock_data_consumer created with ALL STRING types
+📋 Available tables in silver schema: ['stock_data_consumer']
+
+======================================================================
+📈 Running Stock Data Consumer
+======================================================================
+✅ Configuration loaded
+🚀 Starting Stock Consumer Script
+⏰ 2025-07-21 22:12:10
+
+🔄 Starting stock data consumption and processing...
+📈 1: STOCK - AAPL @ $211.18
+📈 2: STOCK - GOOGL @ $185.06
+📈 3: STOCK - MSFT @ $510.05
+📈 4: STOCK - AMZN @ $226.13
+📈 5: STOCK - META @ $704.28
+📈 6: STOCK - TSLA @ $329.65
+✅ Consumed 6 stock messages
+
+🔍 DEBUG - Message 1 structure:
+   Keys: ['symbol', 'timestamp', 'open_price', 'high_price', 'low_price', 'close_price', 'volume', 'source', 'data_type', 'market_cap_estimate', 'daily_range', 'api_fetch_time', 'event_timestamp', 'event_source', 'partition_key', 'processing_mode', 'consumer_timestamp', 'partition_id']
+   data_type: stock_price
+   symbol: AAPL
+   symbol: AAPL (type: str)
+   timestamp: 2025-07-18T20:00:00 (type: str)
+   open_price: 210.87 (type: str)
+   high_price: 211.79 (type: str)
+   low_price: 209.7045 (type: str)
+   close_price: 211.18 (type: str)
+   volume: 48974591.0 (type: str)
+   source: polygon.io (type: str)
+   data_type: stock_price (type: str)
+   market_cap_estimate: 10342454127.380001 (type: str)
+   daily_range: 2.085499999999996 (type: str)
+   api_fetch_time: 2025-07-21T22:09:51.018098+00:00 (type: str)
+   event_timestamp: 2025-07-21T22:10:52.649148+00:00 (type: str)
+   event_source: api_producer (type: str)
+   partition_key: AAPL (type: str)
+   processing_mode: streaming (type: str)
+   consumer_timestamp: 2025-07-21T22:12:17.787432+00:00 (type: str)
+   partition_id: 3 (type: str)
+
+📈 Processing 6 stock events:
+
+🔍 Processing stock 1: AAPL
+   Available fields: ['symbol', 'timestamp', 'open_price', 'high_price', 'low_price', 'close_price', 'volume', 'source', 'data_type', 'market_cap_estimate', 'daily_range', 'api_fetch_time', 'event_timestamp', 'event_source', 'partition_key', 'processing_mode', 'consumer_timestamp', 'partition_id']
+   Symbol: AAPL
+   Timestamp: 2025-07-18T20:00:00
+   close_price: 211.18 -> 211.18
+   open_price: 210.87 -> 210.87
+   high_price: 211.79 -> 211.79
+   low_price: 209.7045 -> 209.7045
+   volume: 48974591.0 -> 48974591
+   Final prices - O:210.87, H:211.79, L:209.7045, C:211.18, V:48974591
+✅ Stock 1: AAPL @ $211.18 processed successfully
+
+🔍 Processing stock 2: GOOGL
+   Available fields: ['symbol', 'timestamp', 'open_price', 'high_price', 'low_price', 'close_price', 'volume', 'source', 'data_type', 'market_cap_estimate', 'daily_range', 'api_fetch_time', 'event_timestamp', 'event_source', 'partition_key', 'processing_mode', 'consumer_timestamp', 'partition_id']
+   Symbol: GOOGL
+   Timestamp: 2025-07-18T20:00:00
+   close_price: 185.06 -> 185.06
+   open_price: 185.4 -> 185.4
+   high_price: 186.42 -> 186.42
+   low_price: 183.71 -> 183.71
+   volume: 34014509.0 -> 34014509
+   Final prices - O:185.4, H:186.42, L:183.71, C:185.06, V:34014509
+✅ Stock 2: GOOGL @ $185.06 processed successfully
+
+🔍 Processing stock 3: MSFT
+   Available fields: ['symbol', 'timestamp', 'open_price', 'high_price', 'low_price', 'close_price', 'volume', 'source', 'data_type', 'market_cap_estimate', 'daily_range', 'api_fetch_time', 'event_timestamp', 'event_source', 'partition_key', 'processing_mode', 'consumer_timestamp', 'partition_id']
+   Symbol: MSFT
+   Timestamp: 2025-07-18T20:00:00
+   close_price: 510.05 -> 510.05
+   open_price: 514.48 -> 514.48
+   high_price: 514.64 -> 514.64
+   low_price: 507.43 -> 507.43
+   volume: 21209666.0 -> 21209666
+   Final prices - O:514.48, H:514.64, L:507.43, C:510.05, V:21209666
+✅ Stock 3: MSFT @ $510.05 processed successfully
+
+🔍 Processing stock 4: AMZN
+   Available fields: ['symbol', 'timestamp', 'open_price', 'high_price', 'low_price', 'close_price', 'volume', 'source', 'data_type', 'market_cap_estimate', 'daily_range', 'api_fetch_time', 'event_timestamp', 'event_source', 'partition_key', 'processing_mode', 'consumer_timestamp', 'partition_id']
+   Symbol: AMZN
+   Timestamp: 2025-07-18T20:00:00
+   close_price: 226.13 -> 226.13
+   open_price: 225.14 -> 225.14
+   high_price: 226.4 -> 226.4
+   low_price: 222.98 -> 222.98
+   volume: 37833807.0 -> 37833807
+   Final prices - O:225.14, H:226.4, L:222.98, C:226.13, V:37833807
+✅ Stock 4: AMZN @ $226.13 processed successfully
+
+🔍 Processing stock 5: META
+   Available fields: ['symbol', 'timestamp', 'open_price', 'high_price', 'low_price', 'close_price', 'volume', 'source', 'data_type', 'market_cap_estimate', 'daily_range', 'api_fetch_time', 'event_timestamp', 'event_source', 'partition_key', 'processing_mode', 'consumer_timestamp', 'partition_id']
+   Symbol: META
+   Timestamp: 2025-07-18T20:00:00
+   close_price: 704.28 -> 704.28
+   open_price: 702.19 -> 702.19
+   high_price: 704.71 -> 704.71
+   low_price: 691.65 -> 691.65
+   volume: 12779752.0 -> 12779752
+   Final prices - O:702.19, H:704.71, L:691.65, C:704.28, V:12779752
+✅ Stock 5: META @ $704.28 processed successfully
+
+🔍 Processing stock 6: TSLA
+   Available fields: ['symbol', 'timestamp', 'open_price', 'high_price', 'low_price', 'close_price', 'volume', 'source', 'data_type', 'market_cap_estimate', 'daily_range', 'api_fetch_time', 'event_timestamp', 'event_source', 'partition_key', 'processing_mode', 'consumer_timestamp', 'partition_id']
+   Symbol: TSLA
+   Timestamp: 2025-07-18T20:00:00
+   close_price: 329.65 -> 329.65
+   open_price: 321.66 -> 321.66
+   high_price: 330.9 -> 330.9
+   low_price: 321.42 -> 321.42
+   volume: 94254993.0 -> 94254993
+   Final prices - O:321.66, H:330.9, L:321.42, C:329.65, V:94254993
+✅ Stock 6: TSLA @ $329.65 processed successfully
+
+💾 Saving 6 processed stocks...
+✅ Saved stocks to Silver layer (ADLS)
+✅ Also saved stocks to Unity Catalog
+
+🔍 Verification:
+✅ Silver layer stock files: 2
+✅ Verified: 6 new stock records (6 total)
+
+📊 Sample Stock Records:
++------+-----------+--------+----------+----------------+--------------------------------+
+|symbol|close_price|volume  |volatility|volume_indicator|silver_processing_time          |
++------+-----------+--------+----------+----------------+--------------------------------+
+|TSLA  |329.65     |94254993|0.028758  |high            |2025-07-21T22:12:33.248727+00:00|
+|META  |704.28     |12779752|0.018544  |low             |2025-07-21T22:12:33.248617+00:00|
+|AMZN  |226.13     |37833807|0.015124  |medium          |2025-07-21T22:12:33.248538+00:00|
+|MSFT  |510.05     |21209666|0.014136  |medium          |2025-07-21T22:12:33.248436+00:00|
+|GOOGL |185.06     |34014509|0.014644  |medium          |2025-07-21T22:12:33.248327+00:00|
++------+-----------+--------+----------+----------------+--------------------------------+
+
+
+📈 Stock Data Summary:
++------+------------+
+|symbol|record_count|
++------+------------+
+|AAPL  |1           |
+|AMZN  |1           |
+|GOOGL |1           |
+|META  |1           |
+|MSFT  |1           |
+|TSLA  |1           |
++------+------------+
+
+
+📋 Final Summary:
+✅ Consumed: 6 stock messages
+✅ Processed: 6 stock records
+✅ ADLS save: True
+📁 Batch ID: stock_consumer_20250721_221233
+🎯 Focus: Stock data with ALL STRING types (no conflicts possible)
+📋 New Table: databricks_stock_sentiment_canada.silver.stock_data_consumer
+
+⏰ COMPLETED: 22:12:40
+🎯 Stock data consumer with ALL STRING types
