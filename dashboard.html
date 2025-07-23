@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sentiment Headlines Dashboard</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        // Dashboard component code will go here
+        // For now, let's test a simple API call
+        
+        function TestDashboard() {
+            const [data, setData] = React.useState(null);
+            const [loading, setLoading] = React.useState(true);
+            
+            React.useEffect(() => {
+                fetch('http://localhost:5001/api/sentiment/headlines?limit=5')
+                    .then(response => response.json())
+                    .then(data => {
+                        setData(data);
+                        setLoading(false);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        setLoading(false);
+                    });
+            }, []);
+            
+            if (loading) return <div className="p-4">Loading...</div>;
+            
+            return (
+                <div className="p-4">
+                    <h1 className="text-2xl font-bold mb-4">API Test</h1>
+                    <pre className="bg-gray-100 p-4 rounded">
+                        {JSON.stringify(data, null, 2)}
+                    </pre>
+                </div>
+            );
+        }
+        
+        ReactDOM.render(<TestDashboard />, document.getElementById('root'));
+    </script>
+</body>
+</html> 

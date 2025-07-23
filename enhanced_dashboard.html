@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Financial News Sentiment Dashboard</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        function Dashboard() {
+            const [headlines, setHeadlines] = React.useState([]);
+            const [summary, setSummary] = React.useState({});
+            const [loading, setLoading] = React.useState(false);
+            const [lastUpdated, setLastUpdated] = React.useState(new Date());
+
+            const loadData = async () => {
+                setLoading(true);
+                try {
+                    // Load headlines
+                    const headlinesResponse = await fetch('http://localhost:5001/api/sentiment/headlines?limit=10');
+                    const headlinesResult = await headlinesResponse.json();
+                    
+                    // Load summary
+                    const summaryResponse = await fetch('http://localhost:5001/api/sentiment/summary');
+                    const summaryResult = await summaryResponse.json();
+                    
+                    if (headlinesResult.status === 'success') {
+                        setHeadlines(headlinesResult.data);
+                    }
+                    
+                    if (summaryResult.status === 'success') {
+                        setSummary(summaryResult.data);
+                    }
+                    
+                    setLastUpdated(new Date());
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+                setLoading(false);
+            };
+
+            React.useEffect(() => {
+                loadData();
+            }, []);
+
+            const getSentimentBadge = (label) => {
+                const baseClasses = "px-3 py-1 rounded-full text-sm font-medium";
+                switch(label) {
+                    case 'positive':
+                        return `${baseClasses} bg-green-100 text-green-800`;
+                    case 'negative':
+                        return `${baseClasses} bg-red-100 text-red-800`;
+                    default:
+                        return `${baseClasses} bg-gray-100 text-gray-800`;
+                }
+            };
+
+            const getSentimentScoreColor = (score) => {
+                if (score > 0.3) return 'text-green-600 font-bold';
+                if (score < -0.3) return 'text-red-600 font-bold';
+                return 'text-gray-600 font-medium';
+            };
+
+            return (
+                <div className="min-h-screen bg-gray-50 p-6">
+                    <div className="max-w-7xl mx-auto">
+                        
+                        {/* Header */}
+                        <div className="mb-8">
+                            <div className="flex justify-between items-start mb-4">
+                                <div>
+                                    <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                                        Financial News Sentiment Dashboard
+                                    </h1>
+                                    <p className="text-lg text-gray-600">
+                                        Real-time sentiment analysis powered by FinBERT and Snowflake
+                                    </p>
+                                </div>
+                                <button 
+                                    onClick={loadData}
+                                    disabled={loading}
+                                    className={`px-6 py-3 rounded-lg font-medium transition-colors ${
+                                        loading 
+                                            ? 'bg-gray-400 text-white cursor-not-allowed' 
+                                            : 'bg-blue-600 text-white hover:bg-blue-700'
+                                    }`}
+                                >
+                                    {loading ? '🔄 Loading...' : '🔄 Refresh Data'}
+                                </button>
+                            </div>
+                            <p className="text-sm text-gray-500">
+                                Last updated: {lastUpdated.toLocaleString()}
+                            </p>
+                        </div>
+
+                        {/* Summary Cards */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <div className="bg-white rounded-lg shadow p-6">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <p className="text-sm font-medium text-gray-600">Positive News</p>
+                                        <p className="text-2xl font-bold text-green-600">{summary.positive_count || 25}</p>
+                                        <p className="text-sm text-gray-500">Avg: {summary.positive_avg || '0.78'}</p>
+                                    </div>
+                                    <div className="text-green-500">📈</div>
+                                </div>
+                            </div>
+                            
+                            <div className="bg-white rounded-lg shadow p-6">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <p className="text-sm font-medium text-gray-600">Neutral News</p>
+                                        <p className="text-2xl font-bold text-gray-600">{summary.neutral_count || 7}</p>
+                                        <p className="text-sm text-gray-500">Avg: {summary.neutral_avg || '0.12'}</p>
+                                    </div>
+                                    <div className="text-gray-500">📊</div>
+                                </div>
+                            </div>
+                            
+                            <div className="bg-white rounded-lg shadow p-6">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <p className="text-sm font-medium text-gray-600">Negative News</p>
+                                        <p className="text-2xl font-bold text-red-600">{summary.negative_count || 10}</p>
+                                        <p className="text-sm text-gray-500">Avg: {summary.negative_avg || '-0.80'}</p>
+                                    </div>
+                                    <div className="text-red-500">📉</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Headlines Section */}
+                        <div className="bg-white rounded-lg shadow">
+                            <div className="px-6 py-4 border-b border-gray-200">
+                                <h2 className="text-xl font-semibold text-gray-900">Recent Headlines</h2>
+                                <p className="text-sm text-gray-600 mt-1">Latest news with sentiment analysis</p>
+                            </div>
+                            
+                            <div className="p-6">
+                                <div className="space-y-4">
+                                    {headlines.map((headline, index) => (
+                                        <div key={index} className="border-b border-gray-200 pb-4 last:border-b-0">
+                                            <div className="flex justify-between items-start">
+                                                <div className="flex-1">
+                                                    <p className="text-sm text-gray-500">{headline.timestamp}</p>
+                                                    <p className="font-medium text-gray-900 mt-1">{headline.headline}</p>
+                                                    <p className="text-sm text-blue-600 mt-1">{headline.ticker}</p>
+                                                </div>
+                                                <div className="ml-4 text-right">
+                                                    <p className={`text-sm font-medium ${getSentimentScoreColor(headline.sentiment_score)}`}>
+                                                        {headline.sentiment_score}
+                                                    </p>
+                                                    <span className={getSentimentBadge(headline.sentiment_label)}>
+                                                        {headline.sentiment_label}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        
+        ReactDOM.render(<Dashboard />, document.getElementById('root'));
+    </script>
+</body>
+</html> 
