@@ -1,213 +1,196 @@
-# Create the main resource group
+#!/bin/bash
+
+# =============================================================================
+# AZURE RESOURCE CREATION SCRIPT - TEMPLATE VERSION
+# =============================================================================
+# 
+# ⚠️  SECURITY WARNING: This script contains placeholder values for secrets.
+#     Replace the placeholder values with your actual secrets before running.
+#     NEVER commit actual secrets to version control!
+#
+# =============================================================================
+# SETUP INSTRUCTIONS:
+# =============================================================================
+# 1. Replace all placeholder values (marked with <YOUR_ACTUAL_VALUE>) with real secrets
+# 2. Run this script to create Azure resources
+# 3. Store secrets securely in Azure Key Vault
+# 4. Use environment variables or secure methods to access secrets in your application
+# =============================================================================
+
+# Set variables
+RESOURCE_GROUP="rg-stock-sentiment-analysis"
+LOCATION="eastus2"
+STORAGE_ACCOUNT="dlsstocksentiment2025"
+EVENT_HUB_NAMESPACE="eh-stock-sentiment-2025"
+EVENT_HUB_NAME="stock-data-hub"
+KEY_VAULT_NAME="kv-stock-sentiment-2025"
+DATABRICKS_WORKSPACE="databricks-stock-sentiment-canada"
+
+echo "🚀 Creating Azure resources for Stock Sentiment Analysis project..."
+echo "📍 Location: $LOCATION"
+echo "📦 Resource Group: $RESOURCE_GROUP"
+
+# Create resource group
+echo "📋 Creating resource group..."
 az group create \
-  --name rg-stock-sentiment-analysis \
-  --location eastus2 \
-  --tags Environment=Development Project=StockSentiment
-  
-  # Create storage account with hierarchical namespace (Data Lake Gen2)
+  --name $RESOURCE_GROUP \
+  --location $LOCATION
+
+# Create storage account
+echo "💾 Creating storage account..."
 az storage account create \
-  --name dlsstocksentiment2025 \
-  --resource-group rg-stock-sentiment-analysis \
-  --location eastus2 \
+  --name $STORAGE_ACCOUNT \
+  --resource-group $RESOURCE_GROUP \
+  --location $LOCATION \
   --sku Standard_LRS \
   --kind StorageV2 \
-  --enable-hierarchical-namespace true \
-  --tags Environment=Development Project=StockSentiment
+  --https-only true \
+  --min-tls-version TLS1_2
 
+# Get storage account key (this will be used to create connection string)
+STORAGE_KEY=$(az storage account keys list \
+  --account-name $STORAGE_ACCOUNT \
+  --resource-group $RESOURCE_GROUP \
+  --query '[0].value' \
+  --output tsv)
 
-# Get the storage account name
-STORAGE_ACCOUNT_NAME="dlsstocksentiment2025"
-
-# Create the three containers for medallion architecture
-az storage container create \
-  --account-name $STORAGE_ACCOUNT_NAME \
-  --name bronze \
-  --auth-mode login
-
-az storage container create \
-  --account-name $STORAGE_ACCOUNT_NAME \
-  --name silver \
-  --auth-mode login
-
-az storage container create \
-  --account-name $STORAGE_ACCOUNT_NAME \
-  --name gold \
-  --auth-mode login
-  
-  
-  # Create Event Hubs namespace
+# Create Event Hub namespace
+echo "📡 Creating Event Hub namespace..."
 az eventhubs namespace create \
-  --name eh-stock-sentiment-2025 \
-  --resource-group rg-stock-sentiment-analysis \
-  --location eastus2 \
+  --name $EVENT_HUB_NAMESPACE \
+  --resource-group $RESOURCE_GROUP \
+  --location $LOCATION \
   --sku Standard \
-  --capacity 2 \
-  --enable-auto-inflate true \
-  --maximum-throughput-units 4
+  --enable-auto-inflate false \
+  --maximum-throughput-units 0
 
-# Note: Save the namespace name from the output
-
-# Create the event hub
-EVENT_HUB_NAMESPACE="eh-stock-sentiment-2025"
-
+# Create Event Hub
+echo "📡 Creating Event Hub..."
 az eventhubs eventhub create \
-  --name stock-data-hub \
+  --name $EVENT_HUB_NAME \
+  --resource-group $RESOURCE_GROUP \
   --namespace-name $EVENT_HUB_NAMESPACE \
-  --resource-group rg-stock-sentiment-analysis \
-  --partition-count 4
-  
-  
-  # Create Databricks workspace
-az databricks workspace create \
-  --name databricks-stock-sentiment \
-  --resource-group rg-stock-sentiment-analysis \
-  --location westus2 \
-  --sku premium \
-  --tags Environment=Development Project=StockSentiment
-  
-  # List all resources in the resource group to verify
-az resource list \
-  --resource-group rg-stock-sentiment-analysis \
-  --output table
-  
-  # Get storage account connection string
-az storage account show-connection-string \
-  --name $STORAGE_ACCOUNT_NAME \
-  --resource-group rg-stock-sentiment-analysis \
-  --output tsv
+  --message-retention 1 \
+  --partition-count 2
 
 # Get Event Hub connection string
-az eventhubs namespace authorization-rule keys list \
-  --resource-group rg-stock-sentiment-analysis \
+EVENT_HUB_CONNECTION_STRING=$(az eventhubs namespace authorization-rule keys list \
+  --resource-group $RESOURCE_GROUP \
   --namespace-name $EVENT_HUB_NAMESPACE \
   --name RootManageSharedAccessKey \
   --query primaryConnectionString \
-  --output tsv
- 
- az keyvault set-policy \
-  --name kv-stock-sentiment-2025 \
-  ---object-id 68d4b1fe-6876-4157-8047-a0e9ea8c11e4 \
-  --secret-permissions get list set delete backup restore recover purge
- 
- ╰─$ # Assign yourself Key Vault Secrets Officer role                                                                  1 ↵
-az role assignment create \
-  --assignee 68d4b1fe-6876-4157-8047-a0e9ea8c11e4 \
-  --role "Key Vault Secrets Officer" \
-  --scope "/subscriptions/$(az account show --query id --output tsv)/resourceGroups/rg-stock-sentiment-analysis/providers/Microsoft.KeyVault/vaults/kv-stock-sentiment-2025"
+  --output tsv)
 
-  
- az keyvault create \
-  --name kv-stock-sentiment-2025 \
-  --resource-group rg-stock-sentiment-analysis \
-  --location eastus2 \
+# Create Key Vault
+echo "🔐 Creating Key Vault..."
+az keyvault create \
+  --name $KEY_VAULT_NAME \
+  --resource-group $RESOURCE_GROUP \
+  --location $LOCATION \
   --sku standard
-  
-  KEY_VAULT_NAME="kv-stock-sentiment-2025"
 
-# Add Event Hub connection string (replace with your actual connection string)
+# Create Databricks workspace
+echo "🖥️ Creating Databricks workspace..."
+az databricks workspace create \
+  --name $DATABRICKS_WORKSPACE \
+  --resource-group $RESOURCE_GROUP \
+  --location $LOCATION \
+  --sku standard
+
+# =============================================================================
+# STORE SECRETS IN KEY VAULT (REPLACE PLACEHOLDER VALUES!)
+# =============================================================================
+
+echo "🔐 Storing secrets in Key Vault..."
+echo "⚠️  IMPORTANT: Replace placeholder values with your actual secrets!"
+
+# Add Event Hub connection string (REPLACE WITH YOUR ACTUAL CONNECTION STRING)
 az keyvault secret set \
   --vault-name $KEY_VAULT_NAME \
   --name "event-hub-connection-string" \
-  --value "Endpoint=sb://eh-stock-sentiment-2025.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=AQyOtR5PpNma9Lu+R/p12zq80dxnvE+RH+AEhIxU1JY="
+  --value "Endpoint=sb://<YOUR_EVENT_HUB_NAMESPACE>.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=<YOUR_ACTUAL_SHARED_ACCESS_KEY>"
 
-# Add Storage connection string (replace with your actual connection string)
+# Add Storage connection string (REPLACE WITH YOUR ACTUAL CONNECTION STRING)
 az keyvault secret set \
   --vault-name $KEY_VAULT_NAME \
   --name "storage-connection-string" \
-  --value "DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=dlsstocksentiment2025;AccountKey=Ob8j34mkPlz8GEO7PLsflGUwQE18gUVazR98SeoZDCGnZGcxjPhC9Hdb1vi+9R5G9/poTQ76eGhv+AStMuDV6w==;BlobEndpoint=https://dlsstocksentiment2025.blob.core.windows.net/;FileEndpoint=https://dlsstocksentiment2025.file.core.windows.net/;QueueEndpoint=https://dlsstocksentiment2025.queue.core.windows.net/;TableEndpoint=https://dlsstocksentiment2025.table.core.windows.net/"
-  
-   # Get Key Vault details needed for Databricks
-az keyvault show \
-  --name $KEY_VAULT_NAME \
-  --resource-group rg-stock-sentiment-analysis \
-  --query "{name:name, resourceId:id, vaultUri:properties.vaultUri}" \
-  --output table
-  
-  # Get your subscription ID
+  --value "DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=<YOUR_STORAGE_ACCOUNT>;AccountKey=<YOUR_ACTUAL_STORAGE_KEY>;BlobEndpoint=https://<YOUR_STORAGE_ACCOUNT>.blob.core.windows.net/;FileEndpoint=https://<YOUR_STORAGE_ACCOUNT>.file.core.windows.net/;QueueEndpoint=https://<YOUR_STORAGE_ACCOUNT>.queue.core.windows.net/;TableEndpoint=https://<YOUR_STORAGE_ACCOUNT>.table.core.windows.net/"
+
+# Add Polygon API key (REPLACE WITH YOUR ACTUAL API KEY)
+az keyvault secret set \
+  --vault-name $KEY_VAULT_NAME \
+  --name "polygon-api-key" \
+  --value "<YOUR_ACTUAL_POLYGON_API_KEY>"
+
+# Add NewsAPI key (REPLACE WITH YOUR ACTUAL API KEY)
+az keyvault secret set \
+  --vault-name $KEY_VAULT_NAME \
+  --name "newsapi-key" \
+  --value "<YOUR_ACTUAL_NEWSAPI_KEY>"
+
+# Add Snowflake credentials (REPLACE WITH YOUR ACTUAL CREDENTIALS)
+az keyvault secret set \
+  --vault-name $KEY_VAULT_NAME \
+  --name "sf-user" \
+  --value "<YOUR_ACTUAL_SNOWFLAKE_USERNAME>"
+
+az keyvault secret set \
+  --vault-name $KEY_VAULT_NAME \
+  --name "sf-password" \
+  --value "<YOUR_ACTUAL_SNOWFLAKE_PASSWORD>"
+
+az keyvault secret set \
+  --vault-name $KEY_VAULT_NAME \
+  --name "sf-database" \
+  --value "<YOUR_ACTUAL_SNOWFLAKE_DATABASE>"
+
+# =============================================================================
+# SETUP DATABRICKS ACCESS TO KEY VAULT
+# =============================================================================
+
+echo "🔗 Setting up Databricks access to Key Vault..."
+
+# Get your subscription ID
 SUBSCRIPTION_ID=$(az account show --query id --output tsv)
 
 # Create service principal with Key Vault access
+echo "👤 Creating service principal for Databricks..."
 az ad sp create-for-rbac \
   --name "sp-databricks-keyvault" \
   --role "Key Vault Secrets User" \
-  --scopes "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/rg-stock-sentiment-analysis/providers/Microsoft.KeyVault/vaults/$KEY_VAULT_NAME"
-  
-  az ad sp show --id "a01a4407-9d85-41bb-9005-d1d491ab0cf7" --query id --output tsv
-SP_OBJECT_ID="9a543237-6fa6-4b74-a48a-44ab66f9c8a6"
-KEY_VAULT_NAME="kv-stock-sentiment-2025"
-az keyvault set-policy \
-  --name $KEY_VAULT_NAME \
-  --object-id $SP_OBJECT_ID \
-  --secret-permissions get list
-  
-  # Get Databricks workspace details                                                                                1 ↵
+  --scopes "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.KeyVault/vaults/$KEY_VAULT_NAME"
+
+# Get Databricks workspace details
+echo "📊 Getting Databricks workspace details..."
 az databricks workspace show \
-  --name databricks-stock-sentiment-canada \
-  --resource-group rg-stock-sentiment-analysis \
+  --name $DATABRICKS_WORKSPACE \
+  --resource-group $RESOURCE_GROUP \
   --query "{name:name, id:id, managedResourceGroupId:managedResourceGroupId}" \
   --output table
-  
- az role assignment create \
-  --assignee 2ff814a6-3304-4ab8-85cb-cd0e6f879c1d \
-  --role "Key Vault Secrets User" \
-  --scope "/subscriptions/39874c3d-c294-4750-8e03-daa09da31a3b/resourceGroups/rg-stock-sentiment-analysis/providers/Microsoft.KeyVault/vaults/kv-stock-sentiment-2025"
-  
-  # Get your Databricks workspace object ID
-DATABRICKS_IDENTITY=$(az ad sp list --display-name "databricks-stock-sentiment-canada" --query "[0].id" --output tsv)
 
-# If the above doesn't work, try this alternative
-az role assignment create \
-  --assignee-object-id "68d4b1fe-6876-4157-8047-a0e9ea8c11e4" \
-  --assignee-principal-type ServicePrincipal \
-  --role "Key Vault Secrets User" \
-  --scope "/subscriptions/39874c3d-c294-4750-8e03-daa09da31a3b/resourceGroups/rg-stock-sentiment-analysis/providers/Microsoft.KeyVault/vaults/kv-stock-sentiment-2025"
-  
-    az role assignment create \
-  --assignee 2ff814a6-3304-4ab8-85cb-cd0e6f879c1d \
-  --role "Key Vault Secrets User" \
-  --scope "/subscriptions/39874c3d-c294-4750-8e03-daa09da31a3b/resourceGroups/rg-stock-sentiment-analysis/providers/Microsoft.KeyVault/vaults/kv-stock-sentiment-2025"
+# =============================================================================
+# OUTPUT SUMMARY
+# =============================================================================
 
-# Add Polygon API key to Key Vault
-az keyvault secret set \
-  --vault-name kv-stock-sentiment-2025 \
-  --name "polygon-api-key" \
-  --value "Em7xrXc5QX01uQqD29xxTrVZXfrrjC6Q"
-
-# Add NewsAPI key to Key Vault
-az keyvault secret set \
-  --vault-name kv-stock-sentiment-2025 \
-  --name "newsapi-key" \
-  --value "e77a08f48bcd4d2a8feb1a8458888042"
-  
-az keyvault secret set \
-  --vault-name kv-stock-sentiment-2025 \
-  --name "sf-user" \
-  --value "dataexpert_student"
-  
-  
-  az keyvault secret set \
-  --vault-name kv-stock-sentiment-2025 \
-  --name "sf-password" \
-  --value "DataExpert123!"
-  
-  
-  az keyvault secret set \
-  --vault-name kv-stock-sentiment-2025 \
-  --name "sf-database" \
-  --value "dataexpert_student"
-  
-  
-  az keyvault secret set \
-  --vault-name kv-stock-sentiment-2025 \
-  --name "sf-account" \
-  --value "aab46027"
-  
-  az keyvault secret set \
-  --vault-name kv-stock-sentiment-2025 \
-  --name "sf-role" \
-  --value "all_users_role"
-  
-  az keyvault secret set \
-  --vault-name kv-stock-sentiment-2025 \
-  --name "sf-warehouse" \
-  --value "COMPUTE_WH"  
+echo ""
+echo "✅ Azure resources created successfully!"
+echo ""
+echo "📋 RESOURCE SUMMARY:"
+echo "   Resource Group: $RESOURCE_GROUP"
+echo "   Storage Account: $STORAGE_ACCOUNT"
+echo "   Event Hub Namespace: $EVENT_HUB_NAMESPACE"
+echo "   Event Hub: $EVENT_HUB_NAME"
+echo "   Key Vault: $KEY_VAULT_NAME"
+echo "   Databricks Workspace: $DATABRICKS_WORKSPACE"
+echo ""
+echo "⚠️  NEXT STEPS:"
+echo "   1. Replace placeholder values in this script with your actual secrets"
+echo "   2. Re-run the secret storage commands with real values"
+echo "   3. Configure Databricks to access Key Vault"
+echo "   4. Test your pipeline with the new resources"
+echo ""
+echo "🔐 SECURITY REMINDER:"
+echo "   - Never commit actual secrets to version control"
+echo "   - Use environment variables or secure methods to access secrets"
+echo "   - Regularly rotate your API keys and access tokens"
+echo ""  
