@@ -1,0 +1,378 @@
+# =============================================================================
+# AIRFLOW SPECIFIC IGNORES
+# =============================================================================
+# Airflow configuration files (contain sensitive data)
+airflow.cfg
+airflow_settings.yaml
+webserver_config.py
+airflow-webserver.pid
+airflow-webserver*.pid
+
+# Airflow database
+airflow.db
+*.db
+
+# Airflow logs
+logs/
+*.log
+airflow-scheduler.log
+airflow-scheduler.err
+airflow-scheduler.out
+airflow-webserver.log
+airflow-webserver.err
+airflow-webserver.out
+
+# Airflow temporary files
+airflow_home/
+standalone_admin_password.txt
+
+# =============================================================================
+# PYTHON IGNORES
+# =============================================================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+capstone/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# =============================================================================
+# DATABRICKS SPECIFIC IGNORES
+# =============================================================================
+# Databricks workspace files
+.databricks/
+databricks.conf
+databricks-credentials
+
+# Databricks CLI
+.databrickscfg
+
+# Databricks notebooks (if you want to ignore them)
+# *.ipynb
+
+# =============================================================================
+# AZURE SPECIFIC IGNORES
+# =============================================================================
+# Azure credentials
+.azure/
+azure-credentials.json
+
+# Azure CLI
+.azure/
+
+# =============================================================================
+# IDE AND EDITOR IGNORES
+# =============================================================================
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# =============================================================================
+# OPERATING SYSTEM IGNORES
+# =============================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.tmp
+*.temp
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =============================================================================
+# PROJECT SPECIFIC IGNORES
+# =============================================================================
+# Configuration files with sensitive data
+config/
+secrets/
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Data files (if you don't want to track them)
+data/
+*.csv
+*.json
+*.parquet
+*.avro
+*.orc
+
+# Model files
+models/
+*.pkl
+*.pickle
+*.joblib
+*.h5
+*.hdf5
+*.onnx
+*.pb
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+*.temp
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# =============================================================================
+# DOCKER IGNORES
+# =============================================================================
+# Docker
+.dockerignore
+Dockerfile
+docker-compose*.yml
+.docker/
+
+# =============================================================================
+# MONITORING AND LOGS
+# =============================================================================
+# Application logs
+*.log
+logs/
+log/
+
+# Monitoring
+prometheus.yml
+grafana/
+monitoring/
+
+# =============================================================================
+# SECURITY AND CREDENTIALS
+# =============================================================================
+# Never commit these!
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+*.env
+
+# API keys and secrets
+secrets.json
+credentials.json
+api_keys.txt
+*.key
+*.pem
+*.p12
+*.pfx
+
+# SSH keys
+id_rsa
+id_rsa.pub
+*.ppk
+
+# =============================================================================
+# BACKUP AND ARCHIVE FILES
+# =============================================================================
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.bz2
+*.gz
+
+# =============================================================================
+# TESTING AND DEVELOPMENT
+# =============================================================================
+# Test artifacts
+test-results/
+test-output/
+.coverage
+.pytest_cache/
+
+# Development tools
+.astro/

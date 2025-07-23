@@ -1,0 +1,58 @@
+# Airflow DAGs Requirements - Complete Setup
+# Includes ALL dependencies needed for Databricks provider
+
+# =============================================================================
+# CORE AIRFLOW AND ORCHESTRATION
+# =============================================================================
+apache-airflow-providers-databricks>=6.6.0
+apache-airflow-providers-fab>=1.0.0         # Required for Databricks provider
+apache-airflow-providers-http>=4.9.0
+apache-airflow-providers-postgres>=6.2.0
+apache-airflow-providers-sqlite>=3.9.0
+apache-airflow-providers-ftp>=3.11.0
+apache-airflow-providers-imap>=3.7.0
+apache-airflow-providers-smtp>=2.1.0
+apache-airflow-providers-standard>=1.4.0
+apache-airflow-task-sdk>=1.0.0
+
+# =============================================================================
+# FLASK AND UI DEPENDENCIES (Required for Databricks provider)
+# =============================================================================
+flask-appbuilder>=4.0.0
+flask>=2.0.0
+wtforms>=3.0.0
+werkzeug>=2.0.0
+jinja2>=3.0.0
+
+# =============================================================================
+# BASIC DATA PROCESSING
+# =============================================================================
+pandas>=1.5.0
+numpy>=1.21.0
+pyarrow>=8.0.0  # For parquet support
+
+# =============================================================================
+# UTILITIES AND HELPERS
+# =============================================================================
+python-dateutil>=2.8.0
+pytz>=2023.3
+requests>=2.28.0
+
+# =============================================================================
+# TESTING (for DAG validation)
+# =============================================================================
+pytest>=7.3.0
+pytest-cov>=4.0.0
+
+# =============================================================================
+# VERSION CONSTRAINTS FOR COMPATIBILITY
+# =============================================================================
+setuptools>=65.0.0
+wheel>=0.38.0
+pip>=23.0.0
+
+# =============================================================================
+# OPTIONAL: DATABRICKS CLIENT DEPENDENCIES
+# =============================================================================
+# databricks-cli>=0.17.0
+# databricks-sdk>=0.8.0
